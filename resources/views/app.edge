@@ -1,0 +1,26 @@
+@layout('layouts.main')
+
+@section('main')
+
+<div class="flex">
+  
+  @include('includes/aside')
+
+  <main class="w-full p-8 space-y-8 flex flex-col h-screen">
+    
+    @include('includes/header')
+
+    <ul class="flex flex-col flex-auto space-y-4 overflow-y-scroll">
+      
+      @!component('components/message', { content: 'ok', send: true })
+
+      @!component('components/message', { content: 'ok' })
+
+    </ul>
+    
+    @include('includes/form')
+
+  </main>
+</div>
+
+@end

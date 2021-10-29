@@ -1,0 +1,17 @@
+@layout('layouts/main')
+
+@section('main')
+
+<main class="min-h-screen p-4 flex">
+  <form action="/" class="w-full max-w-sm m-auto space-y-8">
+
+    @!component('components/input', { type: 'text', name: 'username', placeholder: 'Pseudo', required: true })
+
+    @!component('components/input', { type: 'password', name: 'password', placeholder: 'Mot de passe', required: true })
+
+    @!component('components/button', { value: 'Connexion' })
+
+  </form>
+</main>
+
+@end
