@@ -1,18 +1,57 @@
-<aside class="w-1/4 flex-none bg-white border-r border-gray-200 shadow-new" style="min-width: 288px">
-  <ul class="h-screen p-4 divide divide-gray-200">
+<aside class="flex-none bg-white border-r border-gray-200 shadow-new">
+  <ul class="h-screen pl-8 pr-16 py-6 divide divide-gray-200">
     <h1 class="pb-4 text-3xl font-medium">Messages</h1>
     
-    @!component('components/user', { picture: 'https://media-exp1.licdn.com/dms/image/C4D03AQGrRzF8SfL8SQ/profile-displayphoto-shrink_400_400/0/1604897379174?e=1640822400&v=beta&t=y2xoB6ryb7btrJEXnpo4m_n2FEy2EGE7A_D8gHVu-Gc', name: 'Luca Di Rosso', state: 'En ligne' })
+    {{--  @!component('components/user', { picture: 'https://media-exp1.licdn.com/dms/image/C4D03AQGrRzF8SfL8SQ/profile-displayphoto-shrink_400_400/0/1604897379174?e=1640822400&v=beta&t=y2xoB6ryb7btrJEXnpo4m_n2FEy2EGE7A_D8gHVu-Gc', name: 'Luca Di Rosso', state: 'En ligne' })  --}}
+
+    <li class="py-4 relative">
+      <input
+        type="text"
+        placeholder="Ajouter"
+        class="w-56 pb-1 border-b border-gray-700 placeholder-gray-400 text-lg font-light tracking-wide outline-none appareance-none"
+        v-model="search"
+        v-on:focus="show = true"
+        v-on:blur="showIsFalse()"
+      />
+      <ul
+        v-show="show"
+        class="absolute top-0 right-0 left-0 mt-14 px-3 py-2 space-y-2 bg-white shadow-new rounded-xl"
+      >
+        <li
+          v-for="user in getUsers"
+          :key="user.id"
+          v-on:click="addConversation(user.id)"
+          class="text-lg font-light cursor-pointer"
+        >${ user.name }</li>
+      </ul>
+    </li>
     
-    @!component('components/user', { picture: 'https://media-exp1.licdn.com/dms/image/C4D03AQGrRzF8SfL8SQ/profile-displayphoto-shrink_400_400/0/1604897379174?e=1640822400&v=beta&t=y2xoB6ryb7btrJEXnpo4m_n2FEy2EGE7A_D8gHVu-Gc', name: 'Luca Di Rosso', state: 'En ligne' })
-    
-    @!component('components/user', { picture: 'https://media-exp1.licdn.com/dms/image/C4D03AQGrRzF8SfL8SQ/profile-displayphoto-shrink_400_400/0/1604897379174?e=1640822400&v=beta&t=y2xoB6ryb7btrJEXnpo4m_n2FEy2EGE7A_D8gHVu-Gc', name: 'Luca Di Rosso', state: 'En ligne' })
-    
-    @!component('components/user', {
-      picture: 'https://media-exp1.licdn.com/dms/image/C4D03AQGrRzF8SfL8SQ/profile-displayphoto-shrink_400_400/0/1604897379174?e=1640822400&v=beta&t=y2xoB6ryb7btrJEXnpo4m_n2FEy2EGE7A_D8gHVu-Gc',
-      name: 'Luca Di Rosso',
-      live: true
-    })
+    <li
+      v-for="conversation in user.conversations"
+      :key="conversation.id"
+      class="py-4"
+    >
+      <div
+        v-for="item in conversation.users"
+        :key="item.id"
+      >
+        <div
+          v-if="item.id !== user.id"
+          v-on:click="setConversation(conversation)"
+          class="space-x-3 flex items-center cursor-pointer"
+        >
+          {{--  <img
+            :src="'/assets/img/' + item.picture"
+            :alt="'Image ' + item.name"
+            class="w-12 h-12 rounded-full"
+          />  --}}
+          <div>
+            <h1 class="text-lg font-medium">${ item.name }</h1>
+            <p class="text-gray-400 text-sm">${ true ? 'En ligne' : 'Hors ligne' }</p>
+          </div>
+        </div>
+      </div>
+    </li>
 
   </ul>
 </aside>

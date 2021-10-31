@@ -3,13 +3,21 @@
 @section('main')
 
 <main class="min-h-screen p-4 flex">
-  <form action="/" class="w-full max-w-sm m-auto space-y-8">
+  <form action="{{ route('LoginController.store') }}" method="post" class="w-full max-w-sm m-auto space-y-8">
+
+    {{ csrfField() }}
 
     @!component('components/input', { type: 'text', name: 'username', placeholder: 'Pseudo', required: true })
 
     @!component('components/input', { type: 'password', name: 'password', placeholder: 'Mot de passe', required: true })
 
     @!component('components/button', { value: 'Connexion' })
+
+    @if(error)
+
+    <p class="text-red-500 text-center">{{ error }}</p>
+
+    @endif
 
   </form>
 </main>

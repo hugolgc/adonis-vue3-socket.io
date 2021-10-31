@@ -1,16 +1,16 @@
 <header class="flex flex-none justify-between items-center">
   <div class="flex items-center space-x-6">
-    <img
-      src="https://media-exp1.licdn.com/dms/image/C4D03AQGrRzF8SfL8SQ/profile-displayphoto-shrink_400_400/0/1604897379174?e=1640822400&v=beta&t=y2xoB6ryb7btrJEXnpo4m_n2FEy2EGE7A_D8gHVu-Gc"
-      alt="Image Luca Di Rosso"
+    {{--  <img
+      :src="'/assets/img/' + other.picture"
+      :alt="'Image' + other.name"
       class="w-16 h-16 rounded-full"
-    />
-    <div class="">
-      <h1 class="text-xl font-medium">Luca Di Rosso</h1>
+    />  --}}
+    <div>
+      <h1 class="text-xl font-medium">${ other.name }</h1>
       <p class="text-gray-400">En ligne</p>
     </div>
   </div>
-  <div class="hidden flex space-x-4">
+  {{--  <div class="flex space-x-4">
     <div class="p-3 rounded-full border border-gray-300">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -21,5 +21,5 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
       </svg>
     </div>
-  </div>
+  </div>  --}}
 </header>

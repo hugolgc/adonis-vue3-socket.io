@@ -1,0 +1,19 @@
+<div
+  v-if="conversation !== null"
+  class="flex-auto"
+>
+  <ul
+  class="flex flex-col space-y-4 overflow-y-scroll"
+  >
+  
+  {{--  @!component('components/message', { content: 'ok', send: true })  --}}
+  
+    <li
+      v-for="message in conversation.messages"
+      :key="message.id"
+      :class="[ message.user.id === user.id ? 'bg-blue-300 text-blue-900 ml-auto' : 'bg-gray-700 text-white' ]"
+      class="w-full max-w-xl px-4 py-3 shadow-new"
+    >${ message.content }</li>
+
+  </ul>
+</div>

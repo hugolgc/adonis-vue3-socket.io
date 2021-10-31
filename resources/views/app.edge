@@ -1,26 +1,100 @@
-@layout('layouts.main')
+@layout('layouts/main')
 
 @section('main')
 
-<div class="flex">
+<div id="app" class="flex">
   
   @include('includes/aside')
 
-  <main class="w-full p-8 space-y-8 flex flex-col h-screen">
+  <main
+    v-if="other.id"
+    class="w-full p-8 space-y-8 flex flex-col h-screen"
+  >
     
     @include('includes/header')
 
-    <ul class="flex flex-col flex-auto space-y-4 overflow-y-scroll">
-      
-      @!component('components/message', { content: 'ok', send: true })
-
-      @!component('components/message', { content: 'ok' })
-
-    </ul>
+    @include('includes/messages')
     
     @include('includes/form')
 
   </main>
+  <main v-else class="w-full p-8 h-screen"></main>
 </div>
+
+@end
+@section('script')
+
+<script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+
+Vue.createApp({
+  delimiters: ['${', '}'],
+  data() {
+    return {
+      socket: io(),
+      user: JSON.parse(`{{{ user }}}`),
+      allUsers: JSON.parse(`{{{ allUsers }}}`),
+      conversation: null,
+      input: '',
+      search: '',
+      show: false
+    }
+  },
+  computed: {
+    other() {
+      return this.conversation !== null ? this.conversation.users.find(user => user.id !== this.user.id) : {}
+    },
+    getUsers() {
+      return this.allUsers.filter(user => user.name.toLowerCase().includes(this.search.toLowerCase())).splice(0, 10)
+    }
+  },
+  methods: {
+    showIsFalse() {
+      setTimeout(() => { this.show = false }, 100)
+    },
+    addConversation(userId) {
+      this.show = false
+      let callback = false
+
+      this.user.conversations.forEach(conversation => conversation.users.forEach(user => {
+        if (user.id == userId) {
+          callback = true
+        }
+      }))
+
+      if (!callback) {
+        this.socket.emit('addConversation', [this.user.id, userId])
+      }
+    },
+    setConversation(item) {
+      console.log(item)
+      this.conversation = item
+    },
+    onSubmit() {
+      this.socket.emit('addMessage', {
+        content: this.input,
+        userId: this.user.id,
+        conversationId: this.conversation.id
+      })
+      this.input = ''
+    }
+  },
+  mounted() {
+    console.log(this.user, this.other)
+    this.conversation = this.user.conversations[0]
+    this.socket.on('setMessages', data => {
+      if (this.user.conversations.find(conversation => conversation.id === data.conversation_id)) {
+        this.user.conversations.find(conversation => conversation.id === data.conversation_id).messages.push(data)
+      }
+    })
+    this.socket.on('setConversations', data => {
+      console.log(data)
+      if (data.users.find(user => user.id == this.user.id)) this.user.conversations.push(data)
+    })
+  }
+}).mount('#app')
+
+</script>
 
 @end

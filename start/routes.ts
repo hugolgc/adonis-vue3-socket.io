@@ -20,6 +20,12 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', 'LoginController.index')
+Route.group(() => {
+  Route.get('/', 'LoginController.index')
+  Route.post('/', 'LoginController.store')
+}).middleware('guest')
 
-Route.get('/app', 'AppController.index')
+Route.group(() => {
+  Route.get('/app', 'AppController.index')
+  Route.get('/app/logout', 'LoginController.delete')
+}).middleware('auth')
